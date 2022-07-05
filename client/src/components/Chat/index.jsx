@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatForm from '../ChatForm';
+import socket from '../../api/ws'
 // import MessageList from '../MessageList';
 
 function Chat() {
