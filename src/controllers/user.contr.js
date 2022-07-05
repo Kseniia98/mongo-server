@@ -36,7 +36,7 @@ class UserController {
   }
   };
 
-  getById = async (req, res, next) => {
+  getUserById = async (req, res, next) => {
     try {
     const id = req.params.id;
   
@@ -48,7 +48,7 @@ class UserController {
   }
   };
 
-  getList = async (req, res, next) => {
+  getUserList = async (req, res, next) => {
     try {  
     const userList = await getUserList();
   

@@ -1,13 +1,10 @@
-const { MongoClient } = require("mongodb");
+const mongoose = require("mongoose");
 
-const uri =
-  "mongodb://localhost:27017/?maxPoolSize=20&w=majority";
+const uri = "mongodb://localhost:27017/test";
 
-// Create a new MongoClient
-const client = new MongoClient(uri);
+mongoose.connect(uri).catch(console.error);
 
-client.connect();
-
-module.exports = () => {
-  return client.db('fd_mongo');
+module.exports = {
+  User: require("./models/user"),
+  Msg: require("./models/message"),
 };

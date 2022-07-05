@@ -1,7 +1,37 @@
-const client = require('../index');
+const  mongoose = require("mongoose");
 
-module.exports = () => {
-  const db = client();
+const userSchema = new mongoose.Schema({
+  firstname: {
+    required: true,
+    type: String,
+    minLength: 3,
+    maxLength: 32,
+  },
+  lastname: {
+    required: true,
+    type: String
+  },
+  age: {
+    required: true,
+    type: Number,
+    min: 18,
+    max: 100,
+  },
+  address: {
+    city: {
+      required: false,
+      type: String,
+    },
+    country: {
+      type: String,
+      enum: ["USA", "Canada", "Brasil", "Mexico", "Cuba"],
+    }
+  },
+  created_at: {
+    type: Date,
+  }
+});
 
-  return db.collection('users');
-}
+const User = mongoose.model('users', userSchema)
+
+module.exports = User;

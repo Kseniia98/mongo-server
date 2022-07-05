@@ -1,18 +1,15 @@
 const createHttpError = require('http-errors');
-const userModel = require('../db/models/user');
-const { ObjectId } = require('mongodb');
+const User = require('../db/models/user');
 
 class UserService {
   createUser = async (data) => {
-    const User = userModel();
-    const result = await User.insertOne(data);
+    const result = await User.create(data);
       
-    return result.insertedId;
+    return result;
   };
 
   getUserList = async () => {
-    const User = userModel();
-    const foundUsers = await User.find().toArray();
+    const foundUsers = await User.find();
 
     if(foundUsers.length === 0){
       throw createHttpError(404, 'Users not found')
@@ -22,8 +19,7 @@ class UserService {
   };
 
   getUserById = async (userId) => {  
-    const User = userModel();
-    const user = await User.findOne({_id: ObjectId(userId)});
+    const user = await User.findOne({_id: userId});
   
     if(!user){
       throw createHttpError(404, 'User not found')
@@ -33,10 +29,8 @@ class UserService {
   };
 
   updateUserById = async (id, data) => {
-    const User = userModel();
-
     const newUser = await User.findOneAndUpdate(
-      {_id: ObjectId(id)},
+      {_id: id},
       {$set: {...data}
       },
       {   
@@ -48,8 +42,7 @@ class UserService {
   };
 
   deleteUserById = async (id) => {
-    const User = userModel();
-    const deletedUser = await User.findOneAndDelete({ _id: ObjectId(id) });
+    const deletedUser = await User.findOneAndDelete({ _id: id});
     
     if(deletedUser.value === null){
       throw createHttpError(404, 'User not found')
