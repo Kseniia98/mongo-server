@@ -2,17 +2,6 @@ const { createUser, updateUserById, deleteUserById, getUserById, getUserList } =
 
 class UserController {
 
-  createUser = async (req, res, next) => {
-    try {
-      const data = req.body;
-      const createdUser = await createUser(data)
-
-      res.status(200).send({ data: createdUser })
-    } catch (error) {
-      next(error)
-    }
-  };
-
   updateUser = async (req, res, next) => {
     try {
       const data = req.body;

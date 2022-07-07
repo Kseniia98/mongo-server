@@ -18,7 +18,7 @@ function ChatForm(props) {
               <Field type="text" name="author_id" />
               <Field type="text" name="body" />
 
-              <button type='submit'></button>
+              <button type='submit'>Send</button>
             </Form>
           );
         }}

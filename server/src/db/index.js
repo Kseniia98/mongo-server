@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const uri = "mongodb://localhost:27017/test";
+const uri = "mongodb://localhost:27017/fd_mongo";
 
 mongoose.connect(uri).catch(console.error);
 

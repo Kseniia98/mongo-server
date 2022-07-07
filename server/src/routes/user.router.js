@@ -1,6 +1,7 @@
 const { Router } = require('express');
-const { getUserList, getUserById, createUser, updateUser, deleteUser } = require('../controllers/user.contr');
-const { createUserMiddleWare, updateUserMiddleWare, paramsUserMiddleWare } = require('../middlewares/user.mw');
+const { getUserList, getUserById, updateUser, deleteUser } = require('../controllers/user.contr');
+const { checkTokenMw } = require('../middlewares/token.mw');
+const { updateUserMiddleWare } = require('../middlewares/user.mw');
 
 // /api/users
 const userRouter = Router();
@@ -8,16 +9,13 @@ const userRouter = Router();
 userRouter.get('/', getUserList);
 
 // by id
-userRouter.get('/:id', paramsUserMiddleWare, getUserById);
-
-// create
-userRouter.post('/', createUser);
+userRouter.get('/:id', getUserById);
 
 // update
-userRouter.patch('/:id', paramsUserMiddleWare, updateUserMiddleWare, updateUser);
+userRouter.patch('/:id', checkTokenMw, updateUserMiddleWare, updateUser);
 
 // delete
-userRouter.delete('/:id', paramsUserMiddleWare, deleteUser);
+userRouter.delete('/:id', deleteUser);
 
 
 module.exports = userRouter;

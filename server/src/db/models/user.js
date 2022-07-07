@@ -1,37 +1,53 @@
-const  mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const mongoose = require("mongoose");
+const { SALT_ROUNDS } = require("../../constants");
 
 const userSchema = new mongoose.Schema({
   firstname: {
-    required: true,
     type: String,
+    required: true,
     minLength: 3,
     maxLength: 32,
   },
   lastname: {
+    type: "String",
     required: true,
-    type: String
   },
   age: {
-    required: true,
     type: Number,
+    required: true,
     min: 18,
     max: 100,
   },
   address: {
     city: {
-      required: false,
       type: String,
+      required: true,
     },
     country: {
       type: String,
       enum: ["USA", "Canada", "Brasil", "Mexico", "Cuba"],
-    }
+    },
   },
-  created_at: {
+  createdAt: {
     type: Date,
-  }
+  },
+  email: {
+    type: String, 
+    required: true,
+    unique: true,
+    min: 7,
+    max: 48,
+  },
+  password: {
+    type: String, // TEXT
+    required: true,
+    set: (password) => {
+      const pass_hash = bcrypt.hashSync(password, SALT_ROUNDS);
+
+      return pass_hash;
+    },
+  },
 });
 
-const User = mongoose.model('users', userSchema)
-
-module.exports = User;
+module.exports = mongoose.model("users", userSchema);

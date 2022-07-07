@@ -1,5 +1,5 @@
 const createHttpError = require('http-errors');
-const User = require('../db/models/user');
+const { User } = require('../db/');
 
 class UserService {
   createUser = async (data) => {
@@ -8,8 +8,8 @@ class UserService {
     return result;
   };
 
-  getUserList = async () => {
-    const foundUsers = await User.find();
+  getUserList = async (filter) => {
+    const foundUsers = await User.find(filter);
 
     if(foundUsers.length === 0){
       throw createHttpError(404, 'Users not found')
@@ -27,6 +27,13 @@ class UserService {
   
     return user;
   };
+
+  findByEmail = async (emailFilter) => {
+    const results = await User.findOne({email: emailFilter});
+
+    return results;
+  };
+
 
   updateUserById = async (id, data) => {
     const newUser = await User.findOneAndUpdate(

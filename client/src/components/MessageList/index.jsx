@@ -4,13 +4,13 @@ function MessageList(props) {
   const messages = Array.isArray(props.list) ? props.list : [];
 
   return (
-    <div>
-      {messages.map(msg=>{
+    <ul>
+      {messages.map(msg => {
         return <li key={msg._id}>
-          {msg.body}
+          {msg.author.firstname} {msg.author.lastname}: {msg.body}
         </li>
       })}
-    </div>
+    </ul>
   )
 }
 
